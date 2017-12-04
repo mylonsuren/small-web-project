@@ -35,6 +35,14 @@ app.get('/entrants', function(req, res) {
 	res.sendFile(__dirname + '/views/entrants.html');
 });
 
+app.get('/standings', function(req, res) {
+	res.sendFile(__dirname + '/views/entrants.html');
+});
+
+app.get('/news', function(req, res) {
+	res.sendFile(__dirname + '/views/entrants.html');
+});
+
 
 //start server
 app.listen(port, function() {

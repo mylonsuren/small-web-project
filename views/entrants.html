@@ -43,18 +43,23 @@
 
         <div class="ui centered row">
             <div class="ui twelve wide column">
-                <div class="ui three cards">
+                <div class="ui four cards">
                   <div ng-repeat="entrant in entrants | orderBy: 'position'" class="card">
                     <div class="image">
-                      <!-- <img src="/images/avatar2/large/elyse.png"> -->
+                      <img src= "{{entrant.pic}}">
                     </div>
                     <div class="content">
                         <div class="ui three column grid">
                             <div class="ui fourteen wide column">
-                                <div class="ui header">{{entrant.fname}} {{entrant.lname}}</div>
+                                <div class="ui small header">
+									<i class="ui {{entrant.country_abv}} flag"></i>{{entrant.fname}} {{entrant.lname}}
+								</div>
                                 <div class="meta">
-                                  <a>{{entrant.program}}</a>| <a>{{entrant.school}}</a>
+                                  {{entrant.program}}
                                 </div>
+								<div class="meta">
+								  <b>{{entrant.school}}</b>
+								</div>
                             </div>
                             <div class="ui two wide column">
                                 <span class="right floated">
@@ -63,7 +68,7 @@
                             </div>
                             <div class="ui sixteen wide column">
                                 <span >
-                                  <i class="ui connectdevelop icon" ></i>
+                                  <i class="ui {{entrant.fname === 'Aldrin' ? 'yellow trophy':'connectdevelop'}} icon" ></i>
                                   <b>{{entrant.points}} PTS</b>
                                 </span>
                             </div>
@@ -71,12 +76,11 @@
                     </div>
                     <div class="extra content">
                         <div class="description">
-                            <b>{{entrant.prev_record[0].points}}</b> 2017 Points ({{entrant.prev_record[0].position}}{{entrant.prev_record[0].position== 1 ? 'st': entrant.prev_record[0].position == 2 ? 'nd': entrant.prev_record[0].position == 3 ? 'rd':'th'}})
-                        </div>
-                        <div class="description">
                             <b>{{entrant.championships.length}}</b> Shabba Championship{{entrant.championships.length == 1 ? '':'s'}}
                         </div>
-
+						<div class="description">
+                            2017 Result: <b>{{entrant.prev_record[0].points}}</b> PTS ({{entrant.prev_record[0].position}}{{entrant.prev_record[0].position== 1 ? 'st': entrant.prev_record[0].position == 2 ? 'nd': entrant.prev_record[0].position == 3 ? 'rd':'th'}})
+                        </div>
                     </div>
                   </div>
                 </div>
