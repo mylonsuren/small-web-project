@@ -25,10 +25,9 @@
                             <div class="ui twelve wide column">
                                 <div class="ui large inverted secondary pointing menu">
                                     <a href="/{{item.title}}" class="ui {{item.active ? 'active':''}} item" ng-repeat="item in navBar" ng-click="navBarClick(item.title)">{{item.title}}</a>
-                                  <!-- <div class="right menu">
-                                    <a class="item">about</a>
-                                    <a class="item">Contact</a>
-                                  </div> -->
+                                  <div class="right menu">
+                                    <a ng-repeat="item in rightNavBar" href="/{{item.title}}" class="item">{{item.title}}</a>
+                                  </div>
                                 </div>
                             </div>
                         </div>

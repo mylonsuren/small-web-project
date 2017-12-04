@@ -89,12 +89,31 @@ app.controller('indexPageController', function($scope, $http) {
         },
     ];
 
+    $scope.rightNavBar = [
+        {
+            title: "about",
+            active: false
+        },
+        {
+            title: "contact",
+            active: false
+        }
+    ];
+
     $scope.navBarClick = function(item) {
         for (var i in $scope.navBar) {
             if ($scope.navBar[i].title == item) {
                 $scope.navBar[i].active = true;
             } else {
                 $scope.navBar[i].active = false;
+            }
+        }
+
+        for (var i in $scope.rightnNavBar) {
+            if ($scope.rightnNavBar[i].title == item) {
+                $scope.rightnNavBar[i].active = true;
+            } else {
+                $scope.rightnNavBar[i].active = false;
             }
         }
     }

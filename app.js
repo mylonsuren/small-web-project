@@ -43,6 +43,14 @@ app.get('/news', function(req, res) {
 	res.sendFile(__dirname + '/views/entrants.html');
 });
 
+app.get('/contact', function(req, res) {
+	res.sendFile(__dirname + '/views/entrants.html');
+});
+
+app.get('/about', function(req, res) {
+	res.sendFile(__dirname + '/views/entrants.html');
+});
+
 
 //start server
 app.listen(port, function() {
