@@ -1,5 +1,5 @@
 <head>
-	<title>Mylon Suren</title>
+	<title>Shabba Championship</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -9,107 +9,54 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28//angular-route.min.js"></script>
 
-	<script type="text/javascript" src="/script/indexPageController.js"></script>
+	<script type="text/javascript" src="../script/index.js"></script>
+    <link rel="stylesheet" href="../style/index.css"/>
 
 </head>
 
 <body ng-app="app" ng-controller="indexPageController">
-
-    <style>
-        td {
-            font-size: 0.9em;
-        }
-    </style>
-
-
-    <div class="ui one column grid" style="margin-right:100px; margin-left: 100px;">
-        <div class="ui row"></div>
-        <div class="ui row"></div>
-        <div class="ui row"></div>
-        <div class="ui row"></div>
-        <div class="ui row"></div>
-        <div class="ui row"></div>
-        <div class="ui row">
-            <div class="ui column">
-                <table class="ui very basic striped large table">
+    <div class="ui four column grid">
+        <div class="ui centered row">
+            <div class="ui sixteen wide column">
+                <div id="mainTitleCard" class="ui black inverted basic segment">
+                    <div class="ui one column grid">
+                        <div class="ui row"></div>
+                        <div class="ui centered row">
+                            <div class="ui twelve wide column">
+                                <div class="ui large inverted secondary pointing menu">
+                                    <a href="/{{item.title}}" class="ui {{item.active ? 'active':''}} item" ng-repeat="item in navBar" ng-click="navBarClick(item.title)">{{item.title}}</a>
+                                  <!-- <div class="right menu">
+                                    <a class="item">about</a>
+                                    <a class="item">Contact</a>
+                                  </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="mainTitle" class="ui huge centered header">
+                        SHABBA Championship
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui centered row">
+            <div class="ui twelve wide column">
+                <div class="ui centered sub header">
+                    2018 Standings
+                </div>
+                <table class="ui very basic striped large padded table">
                     <thead>
                         <tr>
-                            <th class="ui center aligned">
-                                <div class="ui tiny disabled header" style="font-size: 0.8em;">
-                                    POS
-                                </div>
-                            </th>
-                            <th>
-                                <div class="ui tiny disabled header" style="font-size: 0.8em;">
-                                    ENTRANT
-                                </div>
-                            </th>
-                            <th>
-                                <div class="ui tiny disabled header" style="font-size: 0.8em;">
-                                    NATIONALITY
-                                </div>
-                            </th>
-                            <th >
-                                <div class="ui tiny disabled header" style="font-size: 0.8em;">
-                                    SCHOOL
-                                </div>
-                            </th>
-                            <th >
-                                <div class="ui tiny disabled header" style="font-size: 0.8em;">
-                                    PTS
-                                </div>
-                            </th>
+                            <th ng-repeat="cat in categories"><div class="ui tiny disabled header">{{cat.abv.toUpperCase()}}</div></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="ui center aligned">1</td>
-                            <td >Aldrin <b>RAMIRO</b></td>
-                            <td>PHL</td>
-                            <td class="ui disabled">UofT Mississauga</td>
-                            <td >0</td>
-                        </tr>
-                        <tr>
-                            <td class="ui center aligned">2</td>
-                            <td >Chris <b>SENIOW</b></td>
-                            <td>POL</td>
-                            <td class="ui disabled">University of Windsor</td>
-                            <td >0</td>
-                        </tr>
-                        <tr>
-                            <td class="ui center aligned">3</td>
-                            <td  >Jimmy <b>TAM</b></td>
-                            <td>HKG</td>
-                            <td class="ui disabled">McMaster</td>
-                            <td >0</td>
-                        </tr>
-                        <tr>
-                            <td class="ui center aligned">4</td>
-                            <td >Pratham <b>DESAI</b></td>
-                            <td>IND</td>
-                            <td class="ui disabled">University of Toronto</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ui center aligned">5</td>
-                            <td >Mylon <b>SURENTHIRAN</b></td>
-                            <td>LKA</td>
-                            <td class="ui disabled">University of Waterloo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ui center aligned">6</td>
-                            <td >Navid <b>ALAEE</b></td>
-                            <td >CAN</td>
-                            <td class="ui disabled">York University</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td class="ui center aligned">7</td>
-                            <td >Robert <b>KURAMSHIN</b></td>
-                            <td >RUS</td>
-                            <td class="ui disabled">Georgia Tech</td>
-                            <td>0</td>
+                        <tr ng-repeat="entrant in entrants | orderBy: 'position'">
+                            <td>{{entrant.position}}</td>
+                            <td>{{entrant.fname}} <b>{{entrant.lname.toUpperCase()}}</b></td>
+                            <td><i class="ui {{entrant.country_abv}} flag"></i>{{entrant.country}}</td>
+                            <td>{{entrant.school}}</td>
+                            <td>{{entrant.points}}</td>
                         </tr>
                     </tbody>
                 </table>
