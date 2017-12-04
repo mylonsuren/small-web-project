@@ -46,7 +46,7 @@
                 <div class="ui four stackable doubling cards">
                   <div ng-repeat="entrant in entrants | orderBy: 'position'" class="ui {{entrant.fname === 'Aldrin' ? 'yellow':''}} card">
                     <div class="image">
-                      <img ng-src= '../pictures/aldrin_update.jpg'>
+                      <img ng-src= "{{entrant.pic}}">
                     </div>
                     <div class="content">
                         <div class="ui three column grid">
