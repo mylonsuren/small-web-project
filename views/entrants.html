@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div id="mainTitle" class="ui huge centered header">
-                        SHABBA Championship
+                        2018 ENTRANTS
                     </div>
                 </div>
             </div>
@@ -43,8 +43,8 @@
 
         <div class="ui centered row">
             <div class="ui twelve wide column">
-                <div class="ui four cards">
-                  <div ng-repeat="entrant in entrants | orderBy: 'position'" class="card">
+                <div class="ui four stackable doubling cards">
+                  <div ng-repeat="entrant in entrants | orderBy: 'position'" class="ui {{entrant.fname === 'Aldrin' ? 'yellow':''}} card">
                     <div class="image">
                       <img src= "{{entrant.pic}}">
                     </div>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="ui sixteen wide column">
                                 <span >
-                                  <i class="ui {{entrant.fname === 'Aldrin' ? 'yellow trophy':'connectdevelop'}} icon" ></i>
+                                  <i class="ui {{entrant.position == 1 ? 'inverted yellow trophy': entrant.position == 2 ? 'grey trophy': entrant.position == 3 ? 'orange trophy':'connectdevelop'}} icon"></i>
                                   <b>{{entrant.points}} PTS</b>
                                 </span>
                             </div>
