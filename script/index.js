@@ -14,23 +14,32 @@ app.controller('indexPageController', function($scope, $http) {
         }
     });
 
+    function compare(a,b) {
+      if (parseInt(a.points) > parseInt(b.points))
+        return -1;
+      if (parseInt(a.points) < parseInt(b.points))
+        return 1;
+      return 0;
+    }
+
+
+
     $http.get("https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb")
     .then(function(response) {
         $scope.entrants = response.data;
 
-        for (var x  in $scope.entrants) {
-            for (var y in $scope.entrants) {
-                if ($scope.entrants[x].points > $scope.entrants[y].points) {
-                    var temp = $scope.entrants[x];
-                    $scope.entrants[x] = $scope.entrants[y]
-                    $scope.entrants[y] = temp;
-                }
-            }
-        }
+        $scope.entrants.sort(compare);
+
 
         for (var x in $scope.entrants) {
             console.log($scope.entrants[x].points);
             $scope.entrants[x].position = parseInt(x) + 1;
+            console.log($scope.entrants[x]._id.$oid);
+            $.ajax( { url: "https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants/" + $scope.entrants[x]._id.$oid + "?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb",
+    		  data: JSON.stringify( { "$set" : { "position" : parseInt(x)+1 } } ),
+    		  type: "PUT",
+    		  contentType: "application/json"
+            });
         }
 
     });
