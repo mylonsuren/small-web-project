@@ -18,7 +18,7 @@ app.use("/node_modules", express.static(__dirname + '/node_modules'));
 
 //pages
 app.get('/', function(req, res) {
-	res.sendFile(__dirname + '/shabba.html');
+	res.sendFile(__dirname + '/views/index.html');
 });
 
 //start server
