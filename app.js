@@ -27,28 +27,24 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get('/home', function(req, res) {
-	res.sendFile(__dirname + '/views/index.html');
+app.get('/players', function(req, res) {
+	res.sendFile(__dirname + '/views/players.html');
 });
 
-app.get('/entrants', function(req, res) {
-	res.sendFile(__dirname + '/views/entrants.html');
-});
-
-app.get('/standings', function(req, res) {
-	res.sendFile(__dirname + '/views/entrants.html');
+app.get('/stats', function(req, res) {
+	res.sendFile(__dirname + '/views/stats.html');
 });
 
 app.get('/news', function(req, res) {
-	res.sendFile(__dirname + '/views/entrants.html');
+	res.sendFile(__dirname + '/views/news.html');
 });
 
-app.get('/contact', function(req, res) {
-	res.sendFile(__dirname + '/views/entrants.html');
+app.get('/rules', function(req, res) {
+	res.sendFile(__dirname + '/views/rules.html');
 });
 
-app.get('/about', function(req, res) {
-	res.sendFile(__dirname + '/views/entrants.html');
+app.get('/submit', function(req, res) {
+	res.sendFile(__dirname + '/views/submit.html');
 });
 
 

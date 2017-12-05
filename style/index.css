@@ -1,15 +1,63 @@
 
 
-body {
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 
-#mainTitle {
-    font-size: 4em;
-    margin-top: 120px;
+#title {
+
+    background: url("http://hdwallpaperbackgrounds.net/wp-content/uploads/2017/04/Nature-Widescreen.jpg") 50% 20% no-repeat; /* 50% 50% centers image in div */
+    width: auto;
+    height: auto;
+
 }
 
 
-#mainTitleCard {
-    height: 50%;
+.bg {
+    /* The image used */
+   background-image: url("https://i.imgur.com/HPysTbH.jpg");
+
+   /* Full height */
+   height: 55%;
+   opacity: 1;
+   /* Center and scale the image nicely */
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+#countdown {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+
+#clockdiv{
+	/*font-family: sans-serif;*/
+	color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	display: inline-block;
+	font-weight: 250;
+	text-align: center;
+	font-size: 60px;
+}
+
+#clockdiv > div{
+	padding: 10px;
+	border-radius: 3px;
+	/*background: black;*/
+	display: inline-block;
+}
+
+#clockdiv div > span{
+	padding: 15px;
+	border-radius: 3px;
+	/*background: black;*/
+	display: inline-block;
+}
+
+.smalltext{
+	padding-top: 0px;
+	font-size: 16px;
 }

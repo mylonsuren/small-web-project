@@ -1,5 +1,5 @@
 <head>
-	<title>Shabba Championship</title>
+	<title>Shabba&reg;</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -15,51 +15,111 @@
 </head>
 
 <body ng-app="app" ng-controller="indexPageController">
-    <div class="ui four column grid">
-        <div class="ui centered row">
-            <div class="ui sixteen wide column">
-                <div id="mainTitleCard" class="ui black inverted basic segment">
-                    <div class="ui one column grid">
-                        <div class="ui row"></div>
-                        <div class="ui centered row">
-                            <div class="ui twelve wide column">
-                                <div class="ui large inverted secondary pointing menu">
-                                    <a href="/{{item.title}}" class="ui {{item.active ? 'active':''}} item" ng-repeat="item in navBar" ng-click="navBarClick(item.title)">{{item.title}}</a>
-                                  <div class="right menu">
-                                    <a ng-repeat="item in rightNavBar" href="/{{item.title}}" class="item">{{item.title}}</a>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="mainTitle" class="ui huge centered header">
-                        SHABBA Championship
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ui centered row">
-            <div class="ui twelve wide column">
-                <div class="ui centered sub header">
-                    2018 Standings
-                </div>
-                <table class="ui very basic striped large padded table">
-                    <thead>
-                        <tr>
-                            <th ng-repeat="cat in categories"><div class="ui tiny disabled header">{{cat.abv.toUpperCase()}}</div></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="entrant in entrants | orderBy: 'position'">
-                            <td>{{entrant.position}}</td>
-                            <td>{{entrant.fname}} <b>{{entrant.lname.toUpperCase()}}</b></td>
-                            <td><i class="ui {{entrant.country_abv}} flag"></i>{{entrant.country}}</td>
-                            <td>{{entrant.school}}</td>
-                            <td>{{entrant.points}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div class="bg">
+		<div class="ui sixteen column centered grid">
+			<div class="ui row"></div>
+			<div class="ui twelve wide centered column">
+				<div class="ui large black pointing secondary menu" style="background-color: white;">
+					<a href="/" class="item">
+					    <img src="https://img.clipartxtras.com/8eb172fa73cf698a243bf240523ab3b0_ninja-turtle-shell-clip-art-clipart-free-clipart-christmas-ninja-turtle-shell-clipart_2100-2100.jpeg" style="height: 50px; width: 50px;">
+					</a>
+					<a href="/{{item.title}}" class="ui {{item.active ? 'active':''}} item" ng-repeat="item in navBar">{{item.title}}</a>
+				</div>
+			</div>
+			<div class="ui one column row"></div>
+			<div class="ui one column row"></div>
+			<div class="ui one column row"></div>
+			<div class="ui one column row"></div>
+			<div class="ui one column row">
+				<h1 id="countdown" class="ui inverted header">COUNTDOWN TO SEASON 2</h1>
+				<div id="clockdiv" style="margin: auto; width: 50%;">
+					<span class="days"></span> : <span class="hours"></span> : <span class="minutes"></span> : <span class="seconds"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui sixteen column centered grid">
+		<div class="ui twelve wide centered column"></div>
+
+		<div class="ui twelve wide centered column">
+			<h3 class="ui centered header">
+				STANDINGS
+			</h3>
+			<table class="ui very basic striped large small table" style="padding-bottom: 30px;">
+				<thead>
+					<tr>
+						<th ng-repeat="cat in categories"><div class="ui tiny disabled header">{{cat.abv.toUpperCase()}}</div></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="entrant in entrants | orderBy: 'position'">
+						<td>{{entrant.position}}</td>
+						<td>{{entrant.fname.toUpperCase()}} <b>{{entrant.lname.toUpperCase()}}</b></td>
+						<td>
+							<div class="ui tiny header">
+								<div class="ui tiny sub header" style="font-weight: 100;">
+									{{entrant.country_code.toUpperCase()}}
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="ui tiny header">
+								<div class="ui tiny sub header">
+									{{entrant.school.toUpperCase()}}
+								</div>
+							</div>
+						</td>
+						<td><b>{{entrant.points}}</b></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </body>
+
+
+<script>
+	function getTimeRemaining(endtime) {
+	  var t = Date.parse(endtime) - Date.parse(new Date());
+	  var seconds = Math.floor((t / 1000) % 60);
+	  var minutes = Math.floor((t / 1000 / 60) % 60);
+	  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+	  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+	  return {
+		'total': t,
+		'days': days,
+		'hours': hours,
+		'minutes': minutes,
+		'seconds': seconds
+	  };
+	}
+
+	function initializeClock(id, endtime) {
+	  var clock = document.getElementById(id);
+	  var daysSpan = clock.querySelector('.days');
+	  var hoursSpan = clock.querySelector('.hours');
+	  var minutesSpan = clock.querySelector('.minutes');
+	  var secondsSpan = clock.querySelector('.seconds');
+
+	  function updateClock() {
+		var t = getTimeRemaining(endtime);
+
+		daysSpan.innerHTML = t.days;
+		hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+		minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+		secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+		if (t.total <= 0) {
+		  clearInterval(timeinterval);
+		}
+	  }
+
+	  updateClock();
+	  var timeinterval = setInterval(updateClock, 1000);
+	}
+
+	var deadline = new Date(Date.parse('January 1, 2018'));
+	initializeClock('clockdiv', deadline);
+
+
+</script>
