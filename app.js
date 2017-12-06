@@ -5,7 +5,7 @@ var app = express(); // declares express app
 var mongoose = require('mongoose');
 
 
-var port = process.env.PORT || 4000; //sets the port to listen on
+var port = process.env.PORT || 8887; //sets the port to listen on
 
 app.use("/style", express.static(__dirname + '/style'));
 app.use("/script", express.static(__dirname + '/script'));

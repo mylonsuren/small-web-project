@@ -1,15 +1,38 @@
 
 
+// function onSignIn(googleUser) {
+//   // Useful data for your client-side scripts:
+//   var profile = googleUser.getBasicProfile();
+//   console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+//   console.log('Full Name: ' + profile.getName());
+//   console.log('Given Name: ' + profile.getGivenName());
+//   console.log('Family Name: ' + profile.getFamilyName());
+//   console.log("Image URL: " + profile.getImageUrl());
+//   console.log("Email: " + profile.getEmail());
+//
+//
+//
+//   // The ID token you need to pass to your backend:
+//   var id_token = googleUser.getAuthResponse().id_token;
+//   console.log("ID Token: " + id_token);
+// };
+
 
 
 var app = angular.module("app", []);
+
+
 
 app.controller('submitPageController', function($scope, $http) {
 
     $(document).ready(function() {
         $scope.submissionreceived = false;
-        $scope.warning = false
-        $('.ui.selection.dropdown').dropdown();
+        $scope.warningPts = false;
+        $scope.warningDate = false;
+        $scope.warningDescription = false;
+        $scope.notSignedIn = true;
+
+        // $('.ui.selection.dropdown').dropdown();
 
         $('#calendarDropdown').calendar({
             type: 'date',
@@ -65,6 +88,9 @@ app.controller('submitPageController', function($scope, $http) {
             .dropdown('clear');
 
         $scope.submissionreceived = false;
+        $scope.warningPts = false;
+        $scope.warningDate = false;
+        $scope.warningDescription = false;
     }
 
 
@@ -73,54 +99,144 @@ app.controller('submitPageController', function($scope, $http) {
     .then(function(response) {
         $scope.entrants = response.data;
 
-        // $http.get("https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb")
-        // .then(function(response_inter) {
-            // $scope.logs = response_inter.data;
-
             //when submit button is clicked, update log, and update user's interaction array
+
+            function onSignIn(googleUser) {
+              // Useful data for your client-side scripts:
+              var profile = googleUser.getBasicProfile();
+              console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+              console.log('Full Name: ' + profile.getName());
+              console.log('Given Name: ' + profile.getGivenName());
+              console.log('Family Name: ' + profile.getFamilyName());
+              console.log("Image URL: " + profile.getImageUrl());
+              console.log("Email: " + profile.getEmail());
+
+
+
+              $scope.$apply(function() {
+                   $scope.user = {
+                       fullName: profile.getName(),
+                       givenName: profile.getGivenName(),
+                       familyName: profile.getFamilyName(),
+                       pic: profile.getImageUrl(),
+                       email: profile.getEmail(),
+                       id: profile.getId()
+                   }
+
+                   $scope.notSignedIn = false;
+              });
+
+
+              $scope.$apply(function() {
+                    $scope.submitPlayer = findUser();
+              });
+
+              function findUser() {
+                  if ($scope.user.fullName.includes("Mylon") || $scope.user.fullName.includes("mylon")) {
+                      console.log('here');
+                      return findPlayer('Mylon');
+                  } else if ($scope.user.fullName.includes("Pratham") || $scope.user.fullName.includes("pratham")) {
+
+                  } else if ($scope.user.fullName.includes("Robert") || $scope.user.fullName.includes("robert")) {
+
+                  } else if ($scope.user.fullName.includes("Aldrin") || $scope.user.fullName.includes("aldrin")) {
+
+                  } else if ($scope.user.fullName.includes("Chris") || $scope.user.fullName.includes("chris")) {
+
+                  } else if ($scope.user.fullName.includes("Navid") || $scope.user.fullName.includes("navid")) {
+
+                  } else if ($scope.user.fullName.includes("Jimmy") || $scope.user.fullName.includes("jimmy")) {
+
+                  }
+              }
+
+              function findPlayer(name) {
+                  for (var i in $scope.entrants) {
+                      if (name === $scope.entrants[i].fname) {
+                          return $scope.entrants[i];
+                      }
+                  }
+              }
+
+               // $scope.submitPlayer = findUser();
+
+              // The ID token you need to pass to your backend:
+              var id_token = googleUser.getAuthResponse().id_token;
+              console.log("ID Token: " + id_token);
+
+              var name = profile.getName();
+
+            };
+
+            window.onSignIn = onSignIn;
+            // $scope.$digest();
+
+
             $scope.submitButtonClick = function() {
 
-
-
-                var id = document.getElementById("name").value;
+                var id = $scope.submitPlayer._id.$oid;
                 var date = new Date(Date.parse(document.getElementById("date").value));
                 var points = parseInt(document.getElementById("points").value);
                 var description = document.getElementById("description").value;
 
                 $scope.showId = id;
                 $scope.showDate = date;
-                $scope.showPoints = points;
-                $scope.showDescription = description;
+                console.log($scope.showDate instanceof Date && !isNaN($scope.showDate.valueOf()));
 
-                if ($scope.showPoints < 0 || $scope.showPoints >= 20000) {
-                    $scope.warning = true;
+                if(!($scope.showDate instanceof Date && !isNaN($scope.showDate.valueOf()))) {
+                    console.log("HERERERE");
+                    $scope.warningDate = true;
                     return;
                 }
 
+                $scope.showPoints = points;
+                $scope.showDescription = description;
 
-                for (var x in $scope.entrants) {
-                    if (id === $scope.entrants[x]._id.$oid) {
-                        $scope.person = $scope.entrants[x];
-                        console.log($scope.person.fname)
-                    }
+                if ($scope.showPoints < 0 || $scope.showPoints > 20000) {
+                    $scope.warningPts = true;
+                    return;
                 }
 
-                var person_name = $scope.person.fname.toString() + " " + $scope.person.lname.toString();
+                if ($scope.showDate < new Date('Dec 4 2017') || $scope.showDate > new Date()) {
+                    $scope.warningDate = true;
+                    return
+                }
+
+                if (!$scope.showPoints) {
+                    $scope.warningPts = true;
+                    return;
+                }
+
+                if ($scope.showDescription == "") {
+                    $scope.warningDescription = true;
+                    return;
+                }
+
+                // for (var x in $scope.entrants) {
+                //     if (id === $scope.entrants[x]._id.$oid) {
+                //         $scope.person = $scope.entrants[x];
+                //         console.log($scope.person.fname)
+                //     }
+                // }
+
+                var person_name = $scope.submitPlayer.fname.toString() + " " + $scope.submitPlayer.lname.toString();
                 console.log(person_name);
 
                 var final_interaction = {
                     "id": id.toString(),
                     "name": person_name,
                     "date": date,
+                    "dateadded": new Date(),
                     "ptsawarded": points,
                     "description": description.toString()
                 }
 
-                $scope.person.interactions.push(final_interaction);
-                console.log($scope.person.interactions);
+                $scope.submitPlayer.interactions.push(final_interaction);
+                $scope.submitPlayer.interactions.length = 0;
+                console.log($scope.submitPlayer.interactions);
 
-                $.ajax( { url: "https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants/" + $scope.person._id.$oid + "?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb",
-                  data: JSON.stringify( { "$set" : { "interactions" : $scope.person.interactions  } } ),
+                $.ajax( { url: "https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants/" + $scope.submitPlayer._id.$oid + "?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb",
+                  data: JSON.stringify( { "$set" : { "interactions" : $scope.submitPlayer.interactions  } } ),
                   type: "PUT",
                   contentType: "application/json"
                 });
@@ -129,9 +245,10 @@ app.controller('submitPageController', function($scope, $http) {
         		  data: JSON.stringify({
                       "id": id.toString(),
                       "name": person_name,
-                      "ptsonthisday": parseInt($scope.person.points) + parseInt(points),
-                      "pic": $scope.person.pic,
+                      "ptsonthisday": parseInt($scope.submitPlayer.points) + parseInt(points),
+                      "pic": $scope.submitPlayer.pic,
                       "date": date,
+                      "dateadded": new Date(),
                       "ptsawarded": points,
                       "description": description.toString()
                   }),
@@ -164,7 +281,6 @@ app.controller('submitPageController', function($scope, $http) {
 
             }
 
-        // });
     });
 
 

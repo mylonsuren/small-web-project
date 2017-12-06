@@ -54,8 +54,13 @@
                           <img src="{{event.pic}}" class="ui circular image">
                           <div class="content">
                             {{event.name}}
-                            <div class="ui sub header">{{formatDate(event.date)}}</div>
+							<div class="sub header">
+								Date Added: {{formatDate(event.dateadded)}}
+							</div>
+
                             <div class="ui divider"></div>
+
+							<div class="sub header"><b>{{formatDate(event.date)}}</b></div>
                             <div class="sub header">
                                 {{event.description}}
                             </div>
