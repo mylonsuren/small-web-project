@@ -35,6 +35,14 @@ app.controller('indexPageController', function($scope, $http) {
       return 0;
     }
 
+    function compareInteractions(a,b) {
+      if (parseInt(a.interactions.length) > parseInt(b.interactions.length))
+        return -1;
+      if (parseInt(a.interactions.length) < parseInt(b.interactions.length))
+        return 1;
+      return 0;
+    }
+
 
 
 
@@ -42,12 +50,39 @@ app.controller('indexPageController', function($scope, $http) {
     .then(function(response) {
         $scope.entrants = response.data;
 
-        $scope.entrants.sort(comparePoints);
+        $http.get("https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb")
+        .then(function(response_inter) {
+            $scope.logs = response_inter.data;
 
+
+        });
+
+        for (var x in $scope.entrants) {
+            var interactionsthisweek;
+
+            var currentpoints = 0;
+
+            for (var i in $scope.entrants[x].interactions) {
+                currentpoints += parseInt($scope.entrants[x].interactions[i].ptsawarded);
+            }
+
+            $scope.entrants[x].points = currentpoints;
+
+            $.ajax( { url: "https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants/" + $scope.entrants[x]._id.$oid + "?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb",
+              data: JSON.stringify( { "$set" : { "points" : parseInt($scope.entrants[x].points) } } ),
+              type: "PUT",
+              contentType: "application/json"
+            });
+
+        }
+
+
+        $scope.entrants.sort(comparePoints);
 
         for (var x in $scope.entrants) {
             console.log($scope.entrants[x].points);
             $scope.entrants[x].position = parseInt(x) + 1;
+
             console.log($scope.entrants[x]._id.$oid);
             $.ajax( { url: "https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants/" + $scope.entrants[x]._id.$oid + "?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb",
     		  data: JSON.stringify( { "$set" : { "position" : parseInt(x)+1 } } ),
@@ -60,10 +95,69 @@ app.controller('indexPageController', function($scope, $http) {
               type: "PUT",
               contentType: "application/json"
             });
+
+            $.ajax( { url: "https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants/" + $scope.entrants[x]._id.$oid + "?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb",
+              data: JSON.stringify( { "$set" : { "interactionsperweek" : $scope.interactionsPerWeek($scope.entrants[x]) } } ),
+              type: "PUT",
+              contentType: "application/json"
+            });
+
+
+
+
+
+            $scope.interactions = [
+                // {
+                //     date: 'Nov 23, 2017',
+                //     entrant: $scope.entrants[x].fname + ' ' + $scope.entrants[x].lname,
+                //     description: 'rip grill',
+                //     ptsawarded: 45
+                // }
+            ];
+
+
+            // $.ajax( { url: "https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants/" + $scope.entrants[x]._id.$oid + "?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb",
+            //   data: JSON.stringify( { "$set" : { "interactions" : $scope.interactions } } ),
+            //   type: "PUT",
+            //   contentType: "application/json"
+            // });
         }
 
-        $scope.ptsperweekSort = $scope.entrants;
-        $scope.ptsperweekSort.sort(comparePtsPerWeek);
+        $scope.ptsperweekLeader = PtsPerWeekLeader();
+
+        $scope.mostInteractions = mostInteractions();
+
+        $scope.interactionsperweekLeader = mostInteractionsPerWeek();
+
+        function mostInteractions() {
+
+            var res = Math.max.apply(Math, $scope.entrants.map(function(o){return o.interactions.length;}))
+
+            var obj = $scope.entrants.find(function(o){ return o.interactions.length == res; })
+
+            return obj;
+
+        }
+
+        function PtsPerWeekLeader() {
+
+            var res = Math.max.apply(Math, $scope.entrants.map(function(o){return o.ptsperweek;}))
+
+            var obj = $scope.entrants.find(function(o){ return o.ptsperweek == res; })
+
+            return obj;
+
+        }
+
+        function mostInteractionsPerWeek() {
+
+            var res = Math.max.apply(Math, $scope.entrants.map(function(o){return o.interactionsperweek;}))
+
+            var obj = $scope.entrants.find(function(o){ return o.interactionsperweek == res; })
+
+            return obj;
+
+        }
 
     });
 
@@ -154,9 +248,22 @@ app.controller('indexPageController', function($scope, $http) {
         var first = new Date("October 13, 2017")
 
         var numDays = daydiff(first, today);
-        var ptsperweek = $scope.round(parseInt(player.points)/(numDays/7), 2);
+        var ptsperweek = $scope.round(parseInt(player.points)/(numDays/7), 1);
 
         return ptsperweek;
+
+    }
+
+
+    $scope.interactionsPerWeek = function(player) {
+
+        var today = new Date();
+        var first = new Date("October 13, 2017")
+
+        var numDays = daydiff(first, today);
+        var perWeek = $scope.round(parseInt(player.interactions.length)/(numDays/7), 1);
+
+        return perWeek;
 
     }
 

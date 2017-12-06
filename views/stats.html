@@ -1,10 +1,11 @@
 <head>
-	<title>Players</title>
+	<title>Stats</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	<link rel="icon" href="https://img.clipartxtras.com/8eb172fa73cf698a243bf240523ab3b0_ninja-turtle-shell-clip-art-clipart-free-clipart-christmas-ninja-turtle-shell-clipart_2100-2100.jpeg"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/>
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.css"/> -->
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" rel="stylesheet" type="text/css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.11.8/semantic.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28//angular-route.min.js"></script>
@@ -19,7 +20,7 @@
 		<div class="ui sixteen column centered grid">
 			<div class="ui row"></div>
 			<div class="ui twelve wide centered column">
-				<div class="ui large black pointing secondary menu" style="background-color: white;">
+				<div class="ui large black secondary menu" style="background-color: white;">
 					<a href="/" class="item">
 					    <img src="https://img.clipartxtras.com/8eb172fa73cf698a243bf240523ab3b0_ninja-turtle-shell-clip-art-clipart-free-clipart-christmas-ninja-turtle-shell-clipart_2100-2100.jpeg" style="height: 50px; width: 50px;">
 					</a>
@@ -31,12 +32,15 @@
 	<div class="ui sixteen column centered grid">
 		<div class="ui twelve wide centered column"></div>
         <div class="ui twelve wide centered column">
-            <div class="ui two stackable doubling cards">
+			<div class="ui header">
+				Season Leaders
+			</div>
+            <div class="ui three stackable doubling cards">
                 <div class="ui card">
                     <div class="content">
                       <div class="header">Points Per Week</div>
                       <div class="meta">
-                        <span class="category">Avg. points per week leaders</span>
+                        <!-- <span class="category">Avg. points per week leaders</span> -->
                       </div>
                       <div class="description">
                           <div class="ui two column grid">
@@ -58,23 +62,314 @@
                               </div>
                               <div class="ui column">
                                   <h5 class="ui center aligned header" style="margin-bottom: -15px;">
-                                      <img src="{{ptsperweekSort[0].pic}}" class="ui mini circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
-                                      <p class="ui centered">{{ptsperweekSort[0].fname}} {{ptsperweekSort[0].lname}}</p>
+                                      <img src="{{ptsperweekLeader.pic}}" class="ui large circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
+                                      <p class="ui centered">{{ptsperweekLeader.fname}} {{ptsperweekLeader.lname}}</p>
                                   </h5>
                                   <div class="ui large center aligned header">
                                       <div class="ui meta" style="font-size: 0.6em; margin-bottom: -7px;">
                                           POINTS
                                       </div>
-                                      {{ptsperweekSort[0].ptsperweek}}
+                                      {{ptsperweekLeader.ptsperweek}}
                                   </div>
                               </div>
                           </div>
-
                       </div>
                     </div>
                 </div>
+				<div class="ui card">
+					<div class="content">
+					  <div class="header">Interactions Per Week</div>
+					  <div class="meta">
+						<!-- <span class="category">Avg. points per week leaders</span> -->
+					  </div>
+					  <div class="description">
+						  <div class="ui two column grid">
+							  <div class="ui column">
+								  <table class="ui very basic compact table">
+									  <thead>
+										<tr>
+										  <th></th>
+										  <th></th>
+										</tr>
+									  </thead>
+									  <tbody>
+										<tr ng-repeat="player in entrants | orderBy: '-interactionsperweek'">
+										  <td>{{player.fname}} {{player.lname}}</td>
+										  <td>{{player.interactionsperweek}}</td>
+										</tr>
+									  </tbody>
+									</table>
+							  </div>
+							  <div class="ui column">
+								  <h5 class="ui center aligned header" style="margin-bottom: -15px;">
+									  <img src="{{interactionsperweekLeader.pic}}" class="ui large circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
+									  <p class="ui centered">{{interactionsperweekLeader.fname}} {{interactionsperweekLeader.lname}}</p>
+								  </h5>
+								  <div class="ui large center aligned header">
+									  <div class="ui meta" style="font-size: 0.6em; margin-bottom: -7px;">
+										  INTERACTIONS
+									  </div>
+									  {{interactionsperweekLeader.interactionsperweek}}
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					</div>
+				</div>
+				<div class="ui card">
+					<div class="content">
+					  <div class="header">Points Per Interaction</div>
+					  <div class="meta">
+						<!-- <span class="category">Avg. points per week leaders</span> -->
+					  </div>
+					  <div class="description">
+						  <div class="ui two column grid">
+							  <div class="ui column">
+								  <table class="ui very basic compact table">
+									  <thead>
+										<tr>
+										  <th></th>
+										  <th></th>
+										</tr>
+									  </thead>
+									  <tbody>
+										<tr ng-repeat="player in entrants | orderBy: '-ptsperweek'">
+										  <td>{{player.fname}} {{player.lname}}</td>
+										  <td>{{player.ptsperweek}}</td>
+										</tr>
+									  </tbody>
+									</table>
+							  </div>
+							  <div class="ui column">
+								  <h5 class="ui center aligned header" style="margin-bottom: -15px;">
+									  <img src="{{ptsperweekSort[0].pic}}" class="ui large circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
+									  <p class="ui centered">{{ptsperweekSort[0].fname}} {{ptsperweekSort[0].lname}}</p>
+								  </h5>
+								  <div class="ui large center aligned header">
+									  <div class="ui meta" style="font-size: 0.6em; margin-bottom: -7px;">
+										  POINTS
+									  </div>
+									  {{ptsperweekSort[0].ptsperweek}}
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					</div>
+				</div>
+				<div class="ui card">
+					<div class="content">
+					  <div class="header">Points This Week </div>
+					  <div class="meta">
+						<!-- <span class="category">Avg. points per week leaders</span> -->
+					  </div>
+					  <div class="description">
+						  <div class="ui two column grid">
+							  <div class="ui column">
+								  <table class="ui very basic compact table">
+									  <thead>
+										<tr>
+										  <th></th>
+										  <th></th>
+										</tr>
+									  </thead>
+									  <tbody>
+										<tr ng-repeat="player in entrants | orderBy: '-ptsperweek'">
+										  <td>{{player.fname}} {{player.lname}}</td>
+										  <td>{{player.ptsperweek}}</td>
+										</tr>
+									  </tbody>
+									</table>
+							  </div>
+							  <div class="ui column">
+								  <h5 class="ui center aligned header" style="margin-bottom: -15px;">
+									  <img src="{{ptsperweekLeader.pic}}" class="ui large circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
+									  <p class="ui centered">{{ptsperweekLeader.fname}} {{ptsperweekLeader.lname}}</p>
+								  </h5>
+								  <div class="ui large center aligned header">
+									  <div class="ui meta" style="font-size: 0.6em; margin-bottom: -7px;">
+										  POINTS
+									  </div>
+									  {{ptsperweekLeader.ptsperweek}}
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					</div>
+				</div>
+				<div class="ui card">
+					<div class="content">
+					  <div class="header">Most Interactions</div>
+					  <div class="meta">
+						<!-- <span class="category">Avg. points per week leaders</span> -->
+					  </div>
+					  <div class="description">
+						  <div class="ui two column grid">
+							  <div class="ui column">
+								  <table class="ui very basic compact table">
+									  <thead>
+										<tr>
+										  <th></th>
+										  <th></th>
+										</tr>
+									  </thead>
+									  <tbody>
+										<tr ng-repeat="player in entrants | orderBy: '-interactions.length'">
+										  <td>{{player.fname}} {{player.lname}}</td>
+										  <td>{{player.interactions.length}}</td>
+										</tr>
+									  </tbody>
+									</table>
+							  </div>
+							  <div class="ui column">
+								  <h5 class="ui center aligned header" style="margin-bottom: -15px;">
+									  <img src="{{mostInteractions.pic}}" class="ui large circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
+									  <p class="ui centered">{{mostInteractions.fname}} {{mostInteractions.lname}}</p>
+								  </h5>
+								  <div class="ui large center aligned header">
+									  <div class="ui meta" style="font-size: 0.6em; margin-bottom: -7px;">
+										  INTERACTIONS
+									  </div>
+									  {{mostInteractions.interactions.length}}
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					</div>
+				</div>
+				<div class="ui card">
+					<div class="content">
+					  <div class="header">Most Points in One Interaction</div>
+					  <div class="meta">
+						<!-- <span class="category">Avg. points per week leaders</span> -->
+					  </div>
+					  <div class="description">
+						  <div class="ui two column grid">
+							  <div class="ui column">
+								  <table class="ui very basic compact table">
+									  <thead>
+										<tr>
+										  <th></th>
+										  <th></th>
+										</tr>
+									  </thead>
+									  <tbody>
+										<tr ng-repeat="player in entrants | orderBy: '-ptsperweek'">
+										  <td>{{player.fname}} {{player.lname}}</td>
+										  <td>{{player.ptsperweek}}</td>
+										</tr>
+									  </tbody>
+									</table>
+							  </div>
+							  <div class="ui column">
+								  <h5 class="ui center aligned header" style="margin-bottom: -15px;">
+									  <img src="{{ptsperweekSort[0].pic}}" class="ui large circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
+									  <p class="ui centered">{{ptsperweekSort[0].fname}} {{ptsperweekSort[0].lname}}</p>
+								  </h5>
+								  <div class="ui large center aligned header">
+									  <div class="ui meta" style="font-size: 0.6em; margin-bottom: -7px;">
+										  POINTS
+									  </div>
+									  {{ptsperweekSort[0].ptsperweek}}
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					</div>
+				</div>
             </div>
         </div>
+	</div>
+
+
+	<div class="ui sixteen column centered grid">
+		<div class="ui twelve wide centered column"></div>
+		<div class="ui twelve wide centered column">
+			<div class="ui header">
+				Career Totals
+			</div>
+			<div class="ui two stackable doubling cards">
+				<div class="ui card">
+					<div class="content">
+					  <div class="header">Career Points</div>
+					  <div class="meta">
+						<!-- <span class="category">Avg. points per week leaders</span> -->
+					  </div>
+					  <div class="description">
+						  <div class="ui two column grid">
+							  <div class="ui column">
+								  <table class="ui very basic compact table">
+									  <thead>
+										<tr>
+										  <th></th>
+										  <th></th>
+										</tr>
+									  </thead>
+									  <tbody>
+										<tr ng-repeat="player in entrants | orderBy: '-ptsperweek'">
+										  <td>{{player.fname}} {{player.lname}}</td>
+										  <td>{{player.ptsperweek}}</td>
+										</tr>
+									  </tbody>
+									</table>
+							  </div>
+							  <div class="ui column">
+								  <h5 class="ui center aligned header" style="margin-bottom: -15px;">
+									  <img src="{{ptsperweekSort[0].pic}}" class="ui large circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
+									  <p class="ui centered">{{ptsperweekSort[0].fname}} {{ptsperweekSort[0].lname}}</p>
+								  </h5>
+								  <div class="ui large center aligned header">
+									  <div class="ui meta" style="font-size: 0.6em; margin-bottom: -7px;">
+										  POINTS
+									  </div>
+									  {{ptsperweekSort[0].ptsperweek}}
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					</div>
+				</div>
+				<div class="ui card">
+					<div class="content">
+					  <div class="header">Career Interactions</div>
+					  <div class="meta">
+						<!-- <span class="category">Avg. points per week leaders</span> -->
+					  </div>
+					  <div class="description">
+						  <div class="ui two column grid">
+							  <div class="ui column">
+								  <table class="ui very basic compact table">
+									  <thead>
+										<tr>
+										  <th></th>
+										  <th></th>
+										</tr>
+									  </thead>
+									  <tbody>
+										<tr ng-repeat="player in entrants | orderBy: '-ptsperweek'">
+										  <td>{{player.fname}} {{player.lname}}</td>
+										  <td>{{player.ptsperweek}}</td>
+										</tr>
+									  </tbody>
+									</table>
+							  </div>
+							  <div class="ui column">
+								  <h5 class="ui center aligned header" style="margin-bottom: -15px;">
+									  <img src="{{ptsperweekSort[0].pic}}" class="ui large circular image" style="max-height: 120px; max-width: 120px; padding-bottom: 7px;">
+									  <p class="ui centered">{{ptsperweekSort[0].fname}} {{ptsperweekSort[0].lname}}</p>
+								  </h5>
+								  <div class="ui large center aligned header">
+									  <div class="ui meta" style="font-size: 0.6em; margin-bottom: -7px;">
+										  POINTS
+									  </div>
+									  {{ptsperweekSort[0].ptsperweek}}
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </body>
