@@ -8,6 +8,7 @@ app.controller('submitPageController', function($scope, $http) {
 
     $(document).ready(function() {
         $scope.submissionreceived = false;
+        $scope.warning = false
         $('.ui.selection.dropdown').dropdown();
 
         $('#calendarDropdown').calendar({
@@ -78,6 +79,9 @@ app.controller('submitPageController', function($scope, $http) {
 
             //when submit button is clicked, update log, and update user's interaction array
             $scope.submitButtonClick = function() {
+
+
+
                 var id = document.getElementById("name").value;
                 var date = new Date(Date.parse(document.getElementById("date").value));
                 var points = parseInt(document.getElementById("points").value);
@@ -87,6 +91,12 @@ app.controller('submitPageController', function($scope, $http) {
                 $scope.showDate = date;
                 $scope.showPoints = points;
                 $scope.showDescription = description;
+
+                if ($scope.showPoints < 0 || $scope.showPoints >= 20000) {
+                    $scope.warning = true;
+                    return;
+                }
+
 
                 for (var x in $scope.entrants) {
                     if (id === $scope.entrants[x]._id.$oid) {

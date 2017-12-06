@@ -1,5 +1,5 @@
 <head>
-	<title>Stats</title>
+	<title>Submit</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="https://img.clipartxtras.com/8eb172fa73cf698a243bf240523ab3b0_ninja-turtle-shell-clip-art-clipart-free-clipart-christmas-ninja-turtle-shell-clipart_2100-2100.jpeg"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -91,10 +91,15 @@
                               </div>
                             </div>
                         </div>
-                        <div class="ui field">
+                        <div class="ui field {{warning ? 'error':''}}">
                             <label>Points</label>
-                            <input type="text" id="points" placeholder="Points">
+                            <input type="number" id="points" placeholder="Points">
+							<div ng-show="warning == true" class="ui negative small message">
+								<div class="ui tiny header">Invalid Input</div>
+								<p>Points must be between 1 and 20,000.</p>
+							</div>
                         </div>
+
                     </div>
                 </div>
                 <div class="ui field">
