@@ -104,12 +104,12 @@ app.controller('submitPageController', function($scope, $http) {
             function onSignIn(googleUser) {
               // Useful data for your client-side scripts:
               var profile = googleUser.getBasicProfile();
-              console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-              console.log('Full Name: ' + profile.getName());
-              console.log('Given Name: ' + profile.getGivenName());
-              console.log('Family Name: ' + profile.getFamilyName());
-              console.log("Image URL: " + profile.getImageUrl());
-              console.log("Email: " + profile.getEmail());
+              // console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+              // console.log('Full Name: ' + profile.getName());
+              // console.log('Given Name: ' + profile.getGivenName());
+              // console.log('Family Name: ' + profile.getFamilyName());
+              // console.log("Image URL: " + profile.getImageUrl());
+              // console.log("Email: " + profile.getEmail());
 
 
 
@@ -233,9 +233,12 @@ app.controller('submitPageController', function($scope, $http) {
                     "description": description.toString()
                 }
 
+                // console.log($scope.submitPlayer);
+
                 $scope.submitPlayer.interactions.push(final_interaction);
-                $scope.submitPlayer.interactions.length = 0;
-                console.log($scope.submitPlayer.interactions);
+                // $scope.submitPlayer.interactions.length = 0;
+                // console.log($scope.submitPlayer.interactions);
+                // console.log($scope.submitPlayer._id.$oid);
 
                 $.ajax( { url: "https://api.mlab.com/api/1/databases/shabba-championship/collections/entrants/" + $scope.submitPlayer._id.$oid + "?apiKey=LsLTrgh9YNAnjrItyn7MYJKmzXKt7nqb",
                   data: JSON.stringify( { "$set" : { "interactions" : $scope.submitPlayer.interactions  } } ),
