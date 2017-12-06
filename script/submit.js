@@ -135,18 +135,20 @@ app.controller('submitPageController', function($scope, $http) {
                   if ($scope.user.fullName.includes("Mylon") || $scope.user.fullName.includes("mylon")) {
                       console.log('here');
                       return findPlayer('Mylon');
-                  } else if ($scope.user.fullName.includes("Pratham") || $scope.user.fullName.includes("pratham")) {
-
-                  } else if ($scope.user.fullName.includes("Robert") || $scope.user.fullName.includes("robert")) {
-
-                  } else if ($scope.user.fullName.includes("Aldrin") || $scope.user.fullName.includes("aldrin")) {
-
-                  } else if ($scope.user.fullName.includes("Chris") || $scope.user.fullName.includes("chris")) {
-
-                  } else if ($scope.user.fullName.includes("Navid") || $scope.user.fullName.includes("navid")) {
-
-                  } else if ($scope.user.fullName.includes("Jimmy") || $scope.user.fullName.includes("jimmy")) {
-
+                  } else if ($scope.user.fullName.includes("Pratham") || $scope.user.fullName.includes("pratham") || $scope.user.fullName.includes("Desai")
+                  || $scope.user.fullName.includes("desai")) {
+                      return findPlayer('Pratham');
+                  } else if ($scope.user.fullName.includes("Robert") || $scope.user.fullName.includes("robert") || $scope.user.fullName.includes("Kuramshin")
+                    || $scope.user.fullName.includes("kuramshin")) {
+                         return findPlayer('Robert');
+                  } else if ($scope.user.fullName.includes("Aldrin") || $scope.user.fullName.includes("aldrin") || $scope.user.fullName.includes("Ramiro") || $scope.user.fullName.includes("ramiro")) {
+                       return findPlayer('Aldrin');
+                  } else if ($scope.user.fullName.includes("Chris") || $scope.user.fullName.includes("chris") || $scope.user.fullName.includes("Seniow") || $scope.user.fullName.includes("seniow")) {
+                       return findPlayer('Chris');
+                  } else if ($scope.user.fullName.includes("Navid") || $scope.user.fullName.includes("navid") || $scope.user.fullName.includes("Alaee") || $scope.user.fullName.includes("alaee")) {
+                       return findPlayer('Navid');
+                  } else if ($scope.user.fullName.includes("Jimmy") || $scope.user.fullName.includes("jimmy") || $scope.user.fullName.includes("Tam") || $scope.user.fullName.includes("tam")) {
+                       return findPlayer('Jimmy');
                   }
               }
 
