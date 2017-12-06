@@ -245,7 +245,7 @@ app.controller('indexPageController', function($scope, $http) {
     $scope.ptsPerWeek = function(player) {
 
         var today = new Date();
-        var first = new Date("October 13, 2017")
+        var first = new Date("December 4, 2017")
 
         var numDays = daydiff(first, today);
         var ptsperweek = $scope.round(parseInt(player.points)/(numDays/7), 1);
